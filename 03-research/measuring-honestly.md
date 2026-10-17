@@ -14,8 +14,9 @@ features that make those numbers easy to misread:
 - the same model gives different answers on different runs;
 - results are sliced many ways.
 
-SR 11-7 asks for effective challenge of models. Here, that has to include
-challenging the measurement itself.
+Model-risk guidance asks for effective challenge of models. SR 26-2 leaves
+generative AI to firms' own governance, but the principle carries over, and
+here it has to include challenging the measurement itself.
 
 ## What I read, and what each source changed
 
@@ -70,7 +71,7 @@ second. Holding quality fixed, each extra 100 words adds about a third of a
 point.
 [`m1_validating_the_judge.py`](../05-illustrations/m1_validating_the_judge.py)
 
-**Regulatory hook.** SR 11-7 (effective challenge); FINRA Regulatory Notice
+**Regulatory hook.** Model-risk principles by extension (effective challenge); FINRA Regulatory Notice
 24-09. **NIST AI RMF.** MEASURE 2.13.
 
 ---
@@ -108,7 +109,7 @@ question, give +2.1 points (95% CI −0.7 to +5.0): not distinguishable from
 noise.
 [`m2_noise_floor.py`](../05-illustrations/m2_noise_floor.py)
 
-**Regulatory hook.** SR 11-7 (change management). **NIST AI RMF.** MEASURE 2.13.
+**Regulatory hook.** Model-risk principles by extension (change control). **NIST AI RMF.** MEASURE 2.13.
 
 ---
 
@@ -133,7 +134,7 @@ the false discovery rate controlled at 10%, the 3 real regressions remain and
 the false ones go.
 [`m3_multiple_testing.py`](../05-illustrations/m3_multiple_testing.py)
 
-**Regulatory hook.** SR 11-7 (effective challenge). **NIST AI RMF.** MEASURE 2.13.
+**Regulatory hook.** Model-risk principles by extension (effective challenge). **NIST AI RMF.** MEASURE 2.13.
 
 ## How the tests fit together
 

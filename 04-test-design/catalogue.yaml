@@ -113,7 +113,7 @@ tests:
   method: Weighted rubric; swap answer order, vary length, compare against human labels on a sample.
   passes_if: Judge agreement with humans is above the agreed level and known biases are within tolerance.
   nist: MEASURE 2.13
-  hook: SR 11-7 (effective challenge); Regulatory Notice 24-09
+  hook: Model-risk principles by extension (effective challenge); Regulatory Notice 24-09
 - id: M2
   name: Know the noise first
   script: m2_noise_floor.py
@@ -122,7 +122,7 @@ tests:
   method: Run the baseline repeatedly to estimate the noise floor; bootstrap differences against it.
   passes_if: Only changes beyond the noise floor are reported as real.
   nist: MEASURE 2.13
-  hook: SR 11-7 (change management)
+  hook: Model-risk principles by extension (change control)
 - id: M3
   name: Multiple testing across the suite
   script: m3_multiple_testing.py
@@ -130,7 +130,7 @@ tests:
   method: Collect every slice's p-value and control the false discovery rate (Benjamini-Hochberg).
   passes_if: Every pass/fail statement is backed by the corrected table.
   nist: MEASURE 2.13
-  hook: SR 11-7 (effective challenge)
+  hook: Model-risk principles by extension (effective challenge)
 - id: K1
   name: Calibration of confidence statements
   script: k1_calibration_of_confidence.py
@@ -176,14 +176,14 @@ tests:
   method: A locked battery of the B-tests run on every new version; compare with the previous version.
   passes_if: No behaviour worsens beyond the agreed tolerance between versions.
   nist: MEASURE 2.4
-  hook: SR 11-7 (change management); Regulatory Notice 24-09
+  hook: Model-risk principles by extension (change control); Regulatory Notice 24-09
 - id: V3
   name: Validation equals production
   risk: Different library or model versions in production give different answers from those validated.
   method: Diff the validation and production environments (libraries, model snapshots, data schema).
   passes_if: No material differences, or re-validation triggered.
   nist: MEASURE 2.4
-  hook: SR 11-7 (change management)
+  hook: Model-risk principles by extension (change control)
 - id: V4
   name: Safe model updates
   script: v4_safe_updates.py
@@ -191,7 +191,7 @@ tests:
   method: Run old and new versions on every group cell and an edge-case set; compare.
   passes_if: No cell regresses beyond tolerance without a mitigation.
   nist: MEASURE 2.4
-  hook: SR 11-7 (change management)
+  hook: Model-risk principles by extension (change control)
 - id: O1
   name: Explanations that are faithful
   script: o1_faithful_explanations.py

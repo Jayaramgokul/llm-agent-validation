@@ -22,9 +22,9 @@ changes most. It is set out here.
 
 | Area | Public rules | Why an LLM agent makes it harder | What to test | Tests here |
 |---|---|---|---|---|
-| **Third-party and model-vendor risk** | Interagency Guidance on Third-Party Relationships (2023); SR 11-7; FINRA Regulatory Notice 24-09 | The vendor can update the model and change the agent's behaviour without the firm changing anything | Due diligence, change-notice terms, regression on every vendor update, an exit plan | T1, T2, V2 |
-| **Model inventory and documentation** | SR 11-7; NIST AI RMF | The "model" is a stack: vendor model, prompts, retrieval, guardrails, judge. Each part can change separately | Every component inventoried with owner, version, limits and monitoring | V3 |
-| **Change management** | SR 11-7 | A one-line prompt edit can change advice for every client | Approval workflow; locked regression battery before release; version log | V2, V4 |
+| **Third-party and model-vendor risk** | Interagency Guidance on Third-Party Relationships (2023); SR 26-2 principles on vendor models, by extension; FINRA Regulatory Notice 24-09 | The vendor can update the model and change the agent's behaviour without the firm changing anything | Due diligence, change-notice terms, regression on every vendor update, an exit plan | T1, T2, V2 |
+| **Model inventory and documentation** | Firm policy (SR 26-2 excludes generative AI); NIST AI RMF | The "model" is a stack: vendor model, prompts, retrieval, guardrails, judge. Each part can change separately | Every component inventoried with owner, version, limits and monitoring | V3 |
+| **Change management** | Firm policy (SR 26-2 excludes generative AI) | A one-line prompt edit can change advice for every client | Approval workflow; locked regression battery before release; version log | V2, V4 |
 | **Complaints in a chat interface** | FINRA Rules 4513, 4530 and 3110 | Complaints arrive in natural language, mid-conversation, and are easy to miss | Recognition of complaint language, routing, retention of every interaction | O3 |
 | **Business continuity** | FINRA Rule 4370; Compliance Rule 206(4)-7 | The agent depends on an external service that can fail mid-conversation | Safe failure, client messaging, fallback | O2 |
 | **Privacy** | Regulation S-P (2024 amendments: incident response and notification) | Client data may be sent to an outside model, or leak through it | Data-flow map; leakage attacks; incident response covering AI-specific breaches | G1 (privacy and leakage category) |

@@ -15,7 +15,7 @@ Public documents only. Links checked October 2026.
 | Books and records | Advisers Act rule 204-2 | https://www.ecfr.gov/current/title-17/chapter-II/part-275/section-275.204-2 |
 | Regulation S-P | 17 CFR Part 248, Subpart A, as amended in 2024 | https://www.ecfr.gov/current/title-17/chapter-II/part-248/subpart-A |
 | Third-party risk | Federal Reserve, FDIC and OCC, *Interagency Guidance on Third-Party Relationships: Risk Management* (2023) | https://www.federalregister.gov/d/2023-12340 |
-| Model risk | Federal Reserve SR 11-7 / OCC Bulletin 2011-12, *Supervisory Guidance on Model Risk Management* | https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm |
+| Model risk | Federal Reserve, OCC and FDIC, SR 26-2, *Revised Guidance on Model Risk Management* (April 2026; supersedes SR 11-7; excludes generative and agentic AI) | https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm |
 | AI-washing (2024) | SEC press release 2024-36: settled charges against Delphia (USA) Inc. and Global Predictions Inc. for false and misleading statements about their use of AI | https://www.sec.gov/newsroom/press-releases/2024-36 |
 | Exam priorities | SEC Division of Examinations, annual examination priorities | https://www.sec.gov/exams |
 | NIST AI RMF | NIST AI 100-1 (2023), *Artificial Intelligence Risk Management Framework* | https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf |

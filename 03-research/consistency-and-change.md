@@ -15,9 +15,10 @@ give by default:
   before it reaches clients.
 
 Sclar et al. (2024) showed that meaning-preserving changes to prompt
-formatting alone moved one open model's accuracy by up to 76 points. SR 11-7
-expects change management for models. For an agent, every prompt edit and
-every vendor model update is a model change.
+formatting alone moved one open model's accuracy by up to 76 points. Model-risk
+guidance ties validation to model changes; SR 26-2 leaves generative AI to
+firms' own governance, so the firm has to decide that, for an agent, every
+prompt edit and every vendor model update is a model change.
 
 ## What I read, and what each source changed
 
@@ -26,7 +27,7 @@ every vendor model update is a model change.
 | Sclar et al. (2024), *Quantifying Language Models' Sensitivity to Spurious Features in Prompt Design* | Performance should be reported across plausible prompt variants, not for one fixed format. | Reproducibility across runs and environments (V1); locked regression batteries (V2) |
 | Miller (2024), *Adding Error Bars to Evals* | Compare versions on paired questions with honest error bars. | Old-against-new comparisons (V4) |
 | Saria & Subbaswamy (2019), *Safe and Reliable Machine Learning* | Updates should be checked for safety, not only for average improvement. | Cell-by-cell regression checks (V4) |
-| SR 11-7 | Model changes need validation before use. | V2 to V4 |
+| SR 26-2 (2026) | Validation timing should reflect the frequency and scope of model changes; generative AI is left to firms' own governance. | V2 to V4 |
 
 ## The tests
 
@@ -77,7 +78,7 @@ vendor version, comparing with the previous version using the noise floor
 (M2) and paired comparisons. Pass if no behaviour worsens beyond tolerance.
 **Client harm.** An update quietly makes the agent more sycophantic or
 easier to jailbreak.
-**Regulatory hook.** SR 11-7 (change management); FINRA Regulatory Notice
+**Regulatory hook.** Model-risk principles by extension (change control); FINRA Regulatory Notice
 24-09. **NIST AI RMF.** MEASURE 2.4.
 
 ### V3. Validation equals production
@@ -87,7 +88,7 @@ production environments: model snapshot identifiers, prompt versions,
 retrieval indexes, library versions and data schemas. Pass if there are no
 material differences, or re-validation is triggered.
 **Client harm.** Clients are served by a configuration nobody validated.
-**Regulatory hook.** SR 11-7 (change management). **NIST AI RMF.** MEASURE 2.4.
+**Regulatory hook.** Model-risk principles by extension (change control). **NIST AI RMF.** MEASURE 2.4.
 
 ---
 
@@ -121,7 +122,7 @@ rate from 6.7% to 5.5%. For non-native speakers in vulnerable-customer
 scenarios it rises from 7.5% to 16.8% (corrected q = 0.001).
 [`v4_safe_updates.py`](../05-illustrations/v4_safe_updates.py)
 
-**Regulatory hook.** SR 11-7 (change management). **NIST AI RMF.** MEASURE 2.4.
+**Regulatory hook.** Model-risk principles by extension (change control). **NIST AI RMF.** MEASURE 2.4.
 
 ## How the tests fit together
 

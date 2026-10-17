@@ -12,6 +12,16 @@ vendor management rules apply as they always have. The validation question is
 therefore not "which AI rules apply?" but **"how does a language-model agent
 change the way each existing obligation can fail?"**
 
+## A gap in model-risk guidance
+
+SR 26-2, the model risk guidance that replaced SR 11-7 in April 2026, places
+generative and agentic AI **outside its scope** and leaves their governance to
+each firm's own risk management. Its principles still give the template:
+effective challenge, outcomes analysis, ongoing monitoring and validation of
+vendor models. In this repository, "model-risk principles by extension" means
+applying those principles to a language-model agent as a matter of firm
+policy, with the NIST AI RMF supplying the structure.
+
 ## Obligations and how an agent changes them
 
 | Obligation | Source | How an LLM agent changes the risk | Tests |
@@ -23,8 +33,8 @@ change the way each existing obligation can fail?"**
 | **Books and records** | Advisers Act Rule 204-2; FINRA Rule 4511 | A decision must be rebuildable, including the conversation, model version and prompt | [O3](../03-research/the-agent-in-operation.md), [V3](../03-research/consistency-and-change.md) |
 | **Complaints** | FINRA Rules 4513 and 4530 | Complaints arrive as free text inside a conversation | [O3](../03-research/the-agent-in-operation.md); see [gaps](gaps-and-enforcement.md) |
 | **Business continuity** | FINRA Rule 4370 | The agent depends on an external model service | [O2](../03-research/the-agent-in-operation.md) |
-| **Third-party risk** | Interagency Guidance on Third-Party Relationships (2023); SR 11-7 | The core model is rented and can change without notice | [T1, T2](../03-research/third-party-models.md), [V2](../03-research/consistency-and-change.md) |
-| **Model risk management:** validation, change control, effective challenge | Federal Reserve SR 11-7 / OCC 2011-12 | Every prompt edit and vendor update is a model change; the evaluator is often a model too | [V2 to V4](../03-research/consistency-and-change.md), [M1 to M3](../03-research/measuring-honestly.md) |
+| **Third-party risk** | Interagency Guidance on Third-Party Relationships (2023); SR 26-2 principles on vendor models, by extension | The core model is rented and can change without notice | [T1, T2](../03-research/third-party-models.md), [V2](../03-research/consistency-and-change.md) |
+| **Model risk management:** validation, change control, effective challenge | SR 26-2 (2026) principles, by extension: the guidance itself excludes generative and agentic AI | Every prompt edit and vendor update is treated as a model change; the evaluator is often a model too | [V2 to V4](../03-research/consistency-and-change.md), [M1 to M3](../03-research/measuring-honestly.md) |
 | **Privacy** | Regulation S-P (2024 amendments) | Client data may flow to an outside model and back | [G1](../03-research/guardrails-under-attack.md) (privacy and leakage category); see [gaps](gaps-and-enforcement.md) |
 | **Fair treatment** | Fiduciary duty | Answer quality and confidence can vary with how a client writes | [B3](../03-research/behaviour-when-the-user-changes.md), [K2](../03-research/honest-confidence.md) |
 
