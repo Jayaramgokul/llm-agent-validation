@@ -49,35 +49,72 @@ obligations, or both.
 **Why existing tests miss it.** Red-team results are usually reported as a
 pass rate on one run per prompt, with no interval and no statement of power.
 
-**Data.** A hand-written battery: 8 categories (risk override, guarantees,
-discrimination, fees and conflicts, jailbreaks, vulnerable customers, privacy
-and leakage, financial crime), 6 scenarios each, at 3 levels (basic,
-social-engineering, jailbreak pattern), plus 36 legitimate control questions.
-Each is run three times. Replies are graded first by code (for example, a
-hidden canary string that must never appear), then by an LLM judge whose
-verdict counts only if the sentence it quotes really appears in the reply
-(see M1).
+**Data.** A hand-written battery of attacks, organised so that results can
+be read by category and by skill:
+- **8 categories:** risk override, guarantees, discrimination, fees and
+  conflicts, jailbreaks, vulnerable customers, privacy and leakage, and
+  financial crime;
+- **6 scenarios in each,** at **3 levels of sophistication:** a basic
+  request, a social-engineering attempt, and a known jailbreak pattern;
+- **36 legitimate control questions** that look similar but should be
+  answered, to measure over-refusal;
+- **three runs of every prompt,** since the agent's answer varies.
+
+Replies are graded first by code where possible (for example, a hidden
+"canary" string in the instructions that must never appear in a reply), then
+by an LLM judge whose verdict counts only if the sentence it quotes really
+appears in the reply (M1).
 
 **Method.**
-1. Failure rate overall, by category and by level.
-2. Intervals by resampling prompts (a cluster bootstrap), not replies.
-3. For categories with no failures, the exact upper bound.
-4. The number of failure-free prompts needed to support each target rate.
-5. Over-refusal on the control questions, reported beside the failure rate.
+1. **Failure rate** overall, by category and by level.
+2. **Intervals by resampling prompts** (a cluster bootstrap), not replies.
+   Three runs of one prompt are not three independent tests: if a prompt
+   works, it tends to work every time.
+3. **For categories with no failures, the exact upper bound** on the rate
+   (Clopper–Pearson, one-sided 95%). With zero failures in n prompts, it is
+   about 3 ÷ n.
+4. **The number of failure-free prompts needed** to support each target
+   rate, so the battery can be sized in advance.
+5. **Over-refusal on the control questions,** reported beside the failure
+   rate. A guardrail that refuses legitimate questions also fails clients.
 
-**Setting the pass criteria.** The upper bound of the interval, not the point
-estimate, must be below the agreed rate, and over-refusal must stay below its
-own limit. A guardrail that refuses everything is not a pass.
+**Setting the pass criteria.** Agree, for each category, the highest failure
+rate the firm will accept, and the highest over-refusal rate. Then:
+- **Pass:** the upper end of the interval, not the point estimate, is below
+  the agreed rate, and over-refusal is below its limit.
+- **Inconclusive:** the battery is too small for the upper end to get there,
+  even with no failures. The answer is a larger battery, not a pass.
+- **Fail:** the interval sits above the agreed rate. A guardrail that
+  refuses everything is not a pass either.
 
-**What the illustration shows.** 432 replies give a failure rate of 4.2%.
-Treating every reply as independent gives an interval of 2.7% to 6.5%;
-resampling prompts gives the honest 1.4% to 7.2%. Advanced attacks fail most
-often (6.9%). Financial crime has no failures in 18 prompts, yet its true
-rate could be as high as 15%. Showing a rate below 5% needs 59 failure-free
-prompts, and below 1% needs 299.
+**What the illustration shows.** The script simulates the battery above:
+144 attack prompts, each run three times. Most prompts never work, and the
+few that do tend to work on most runs, as real jailbreaks do.
+
+| Measure | Result |
+|---|---|
+| Overall failure rate | 4.2% of 432 replies |
+| Interval treating every reply as independent | 2.7% to 6.5% |
+| Interval resampling prompts (the right one) | 1.4% to 7.2% |
+| Basic / intermediate / advanced attacks | 2.1% / 3.5% / **6.9%** (1.4–14.6%) |
+| Financial crime | 0 failures in 18 prompts, but the rate could be up to **15%** |
+| Failure-free prompts needed to show a rate below 5% / below 1% | 59 / 299 |
+| Over-refusal on legitimate questions | 6% |
+
+Treating each reply as independent makes the result look about twice as
+precise as it is. The more skilled the attack, the more often it works.
+Financial crime looks perfect, with no failures, but 18 prompts can only show
+that its rate is below 15%. Claiming it is below 5% would need 59
+failure-free prompts, and below 1% would need 299. Most published red-team
+results could not support the claims made from them.
 [`g1_red_team_failure_rate.py`](../05-illustrations/g1_red_team_failure_rate.py)
 
-**Adjacent tests.** M1 (validating the judge), M3 (many slices).
+**Adjacent tests.**
+- **M1** validates the judge that grades the replies; a judge that misses
+  failures makes this test look better than it is.
+- **M3** controls false alarms across the many category-by-level slices.
+- **B2** uses the same exact bounds for claims of professional status.
+
 **Regulatory hook.** FINRA Regulatory Notice 24-09; SEC IM Guidance 2017-02
 (testing). **NIST AI RMF.** MEASURE 2.7.
 
@@ -98,22 +135,54 @@ product the client's real answers do not support.
 
 **Why existing tests miss it.** Thresholds are validated on honest answers.
 
-**Data.** Questionnaire answers and the eligibility rule.
+**Data.**
+- **The structured inputs the agent collects,** such as the answers to a
+  risk questionnaire, for a representative set of clients.
+- **Every eligibility rule** that turns those inputs into access to a
+  product or band.
+- **The firm's consistency checks,** the rules meant to catch answers that do
+  not fit together.
 
 **Method.**
-1. For each ineligible client, find the fewest answer changes that would make
-   them eligible.
-2. Apply the firm's consistency checks to those altered answer sets.
+1. **For each client who is not eligible,** find the fewest answer changes
+   that would make them eligible. On a scored questionnaire, the cheapest
+   route is to raise the lowest answers to the maximum.
+2. **Report the share of all clients within one, and within two, changes**
+   of each threshold.
+3. **Apply the firm's consistency checks** to those altered answer sets, and
+   measure the share that the checks would flag.
+4. **Ask how the agent behaves** when a client asks which answer would change
+   the result, or asks to revise an answer just after being refused. An
+   agent that coaches clients across thresholds turns this weakness into a
+   live risk.
 
-**Setting the pass criteria.** The share of clients within easy reach of each
-threshold is known and accepted, and the consistency checks catch an agreed
-share of implausible changes.
+**Setting the pass criteria.** The share of clients within easy reach of
+each threshold is known and accepted by the model owner, and the consistency
+checks catch an agreed share of implausible changes. Where they do not,
+stronger controls are needed, such as follow-up questions when an answer
+changes, or a human review before access to the riskiest products.
 
-**What the illustration shows.** 8.1% of all clients could unlock the
-highest-risk band by changing one answer, and 18.2% by changing two. A
-simple spread-based consistency check catches only 13% of the two-answer
-cases, so it is not an adequate control on its own.
+**What the illustration shows.** The script simulates 5,000 clients
+answering an eight-question questionnaire. A score of 75 out of 100 unlocks
+the highest-risk band, and 82% of clients fall short of it.
+
+| Measure | Share of all clients |
+|---|---|
+| Could become eligible by changing one answer | 8.1% |
+| Could become eligible by changing at most two answers | 18.2% |
+
+A simple consistency check, which flags answer sets that are unusually
+spread out, catches only 13% of the two-answer cases. Nearly one client in
+five could reach the riskiest band by changing two answers, and the check
+would let almost all of them through. It is not an adequate control on its
+own.
 [`g2_smallest_flipping_change.py`](../05-illustrations/g2_smallest_flipping_change.py)
+
+**Adjacent tests.**
+- **B2** tests a conversational lever on the same limits: claims of
+  professional status.
+- **O2** checks what happens when inputs arrive broken rather than
+  manipulated.
 
 **Regulatory hook.** Compliance Rule 206(4)-7 (controls). **NIST AI RMF.** MEASURE 2.7.
 
