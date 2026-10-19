@@ -90,6 +90,13 @@ expresses doubt, and overconfident whenever it expresses confidence. That is
 the harmful pattern: "almost certain" fails about one time in six, and the
 clients most likely to act on a statement are the ones told it is nearly
 sure.
+
+![Reliability by confidence phrase](../05-illustrations/output/k1_reliability.png)
+
+*Points below the diagonal are phrases that claim more than the outcomes
+support. The three confident phrases sit below it; "possible" and "unlikely"
+sit on it.*
+
 [`k1_calibration_of_confidence.py`](../05-illustrations/k1_calibration_of_confidence.py)
 
 **Adjacent tests.**
