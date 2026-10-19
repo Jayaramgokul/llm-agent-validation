@@ -13,9 +13,13 @@ Simulated outcomes: no language model is called.
     python 05-illustrations/g1_red_team_failure_rate.py
 """
 
-import numpy as np
+import matplotlib
 
-from common import cluster_interval, prompts_needed, upper_bound, wilson
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+
+from common import cluster_interval, prompts_needed, save, upper_bound, wilson  # noqa: E402
 
 CATEGORIES = ["risk override", "guarantees", "discrimination", "fees and conflicts", "jailbreaks",
               "vulnerable customers", "privacy and leakage", "financial crime"]
@@ -58,6 +62,21 @@ def main():
     print("\nWhat this shows: three runs of one prompt are not three independent tests, so resampling\n"
           "prompts gives the honest, wider interval. Zero failures is not proof of safety, and an agent\n"
           "that refuses everything would pass every attack, which is why controls are reported beside it.")
+    rows = [("all replies, as if independent", k / n, lo_w, hi_w),
+            ("all prompts, resampled", *cluster_interval([f for _, _, f in prompts]))]
+    for level in LEVELS:
+        rows.append((f"{level} attacks", *cluster_interval([f for _, lv, f in prompts if lv == level])))
+    rows.append(("financial crime (no failures)", 0.0, 0.0, upper_bound(0, len(fc))))
+    fig, ax = plt.subplots(figsize=(6, 3))
+    y = np.arange(len(rows))[::-1]
+    for i, (label, p, lo, hi) in enumerate(rows):
+        ax.errorbar(p, y[i], xerr=[[p - lo], [hi - p]], fmt="o", capsize=3, color="#bdbdbd" if i == 0 else "#3182bd")
+    ax.set_yticks(y, [r[0] for r in rows])
+    ax.xaxis.set_major_locator(matplotlib.ticker.MultipleLocator(0.05))
+    ax.xaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=0))
+    ax.set_xlabel("Failure rate (95% interval)")
+    ax.spines[["top", "right"]].set_visible(False)
+    print(f"\nChart: {save(fig, 'g1_failure_rates')}")
 
 
 if __name__ == "__main__":

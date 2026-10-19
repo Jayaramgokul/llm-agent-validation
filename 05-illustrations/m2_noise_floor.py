@@ -12,9 +12,13 @@ Simulated outcomes: no language model is called.
     python 05-illustrations/m2_noise_floor.py
 """
 
-import numpy as np
+import matplotlib
 
-from common import paired_interval
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+
+from common import paired_interval, save  # noqa: E402
 
 QUESTIONS, BASELINE_RUNS = 300, 10
 
@@ -45,6 +49,18 @@ def main():
     print("\nWhat this shows: an unchanged model does not score the same twice. Measure that first, then\n"
           "report only differences beyond it, using several runs and pairing by question, so that a\n"
           "lucky run is not reported as an improvement, or an unlucky one as a regression.")
+    fig, ax = plt.subplots(figsize=(6, 2.2))
+    ax.axvspan(baseline.min(), baseline.max(), color="#eeeeee")
+    ax.plot(baseline, np.full(BASELINE_RUNS, 2), "o", color="#3182bd")
+    ax.plot(current.mean(), 1, "o", color="#3182bd")
+    ax.plot(new.mean(), 0, "o", color="#d8543b")
+    ax.set_yticks([2, 1, 0], [f"current version, {BASELINE_RUNS} identical runs", "current version, one run",
+                              "new version, one run"])
+    ax.set_ylim(-0.6, 2.6)
+    ax.xaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=0))
+    ax.set_xlabel("Score; grey band = range of the identical runs")
+    ax.spines[["top", "right"]].set_visible(False)
+    print(f"\nChart: {save(fig, 'm2_noise_floor')}")
 
 
 if __name__ == "__main__":

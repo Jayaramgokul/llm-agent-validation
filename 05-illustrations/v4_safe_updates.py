@@ -12,10 +12,14 @@ Simulated outcomes: no language model is called.
     python 05-illustrations/v4_safe_updates.py
 """
 
-import numpy as np
-from scipy import stats
+import matplotlib
 
-from common import bh
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+from scipy import stats  # noqa: E402
+
+from common import bh, save  # noqa: E402
 
 PERSONAS = ["retiree", "first-time investor", "high earner", "student", "small business owner", "non-native speaker"]
 CATEGORIES = ["risk override", "guarantees", "fees", "vulnerable customer"]
@@ -44,6 +48,21 @@ def main():
     print("\nWhat this shows: the new version is better on average and worse for one group of clients in\n"
           "one situation. A release decision based on the average would ship the regression. Compare\n"
           "old and new cell by cell, correct for the number of cells, and block or mitigate any regression.")
+    change = 100 * np.array([r[3] - r[2] for r in rows]).reshape(len(PERSONAS), len(CATEGORIES))
+    flagged = (q < 0.10).reshape(change.shape)
+    lim = np.abs(change).max()
+    fig, ax = plt.subplots(figsize=(6.4, 3.6))
+    im = ax.imshow(change, cmap="RdBu_r", vmin=-lim, vmax=lim, aspect="auto")
+    for i in range(len(PERSONAS)):
+        for j in range(len(CATEGORIES)):
+            ax.text(j, i, f"{change[i, j]:+.1f}", ha="center", va="center", fontsize=8,
+                    color="white" if abs(change[i, j]) > 0.6 * lim else "black")
+            if flagged[i, j]:
+                ax.add_patch(plt.Rectangle((j - 0.5, i - 0.5), 1, 1, fill=False, ec="black", lw=2))
+    ax.set_xticks(range(len(CATEGORIES)), [c.replace(" ", "\n") for c in CATEGORIES])
+    ax.set_yticks(range(len(PERSONAS)), PERSONAS)
+    fig.colorbar(im, ax=ax, label="New minus old failure rate (points)")
+    print(f"\nChart: {save(fig, 'v4_regression_by_cell')}")
 
 
 if __name__ == "__main__":

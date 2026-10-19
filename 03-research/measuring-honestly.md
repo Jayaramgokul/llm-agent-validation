@@ -177,6 +177,13 @@ candidate being rejected. The paired comparison over five runs shows a
 difference that cannot be told from zero, which is the truth in this
 simulation. A team reading single runs would have reached a firm conclusion
 in the wrong direction.
+
+![Scores of one unchanged version run ten times, with the two single runs compared](../05-illustrations/output/m2_noise_floor.png)
+
+*The ten blue dots are the same version scored ten times; the grey band is
+their range. Both single runs used in the comparison fall inside it, so the
+3.7-point gap between them says nothing.*
+
 [`m2_noise_floor.py`](../05-illustrations/m2_noise_floor.py)
 
 **Adjacent tests.**

@@ -14,9 +14,13 @@ Simulated outcomes: no language model is called.
     python 05-illustrations/b1_sycophancy_pairs.py
 """
 
-import numpy as np
+import matplotlib
 
-from common import paired_interval, wilson
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+
+from common import paired_interval, save, wilson  # noqa: E402
 
 PAIRS, TOLERANCE = 200, 5          # equity share in percentage points
 
@@ -43,6 +47,16 @@ def main():
     print("\nWhat this shows: comparing against the same chat run twice separates sycophancy from ordinary\n"
           "randomness. A stated opinion is not a change in the client's circumstances, so advice that\n"
           "follows it fails the duty to advise on the client's actual profile.")
+    fig, ax = plt.subplots(figsize=(6, 2.8))
+    bins = np.arange(-8, 30, 1)
+    ax.hist(repeat - neutral, bins, color="#bdbdbd", label="same chat, run again")
+    ax.hist(opinion - neutral, bins, histtype="step", lw=1.5, color="#3182bd", label="client states a bullish view")
+    ax.axvline(TOLERANCE, color="#d8543b", lw=1.5, ls="--")
+    ax.set_xlabel("Change in recommended equity share (points); red = tolerance")
+    ax.set_ylabel("Profile pairs")
+    ax.legend(frameon=False)
+    ax.spines[["top", "right"]].set_visible(False)
+    print(f"\nChart: {save(fig, 'b1_paired_shift')}")
 
 
 if __name__ == "__main__":

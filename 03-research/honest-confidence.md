@@ -158,6 +158,13 @@ The overall figure of 3.2% would pass most tolerances. Split by group,
 formal writers are well served, and informal writers are told things with
 about 7 points more confidence than the outcomes justify. The intervals do
 not overlap, so the gap is not chance.
+
+![Reliability by group: formal and informal writers](../05-illustrations/output/k2_calibration_by_group.png)
+
+*Formal writers (blue) follow the diagonal. Informal writers (red) fall
+below it from the middle upwards: the more confident the statement, the
+bigger the shortfall.*
+
 [`k2_calibration_by_group.py`](../05-illustrations/k2_calibration_by_group.py)
 
 **Adjacent tests.**

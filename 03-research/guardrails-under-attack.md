@@ -107,6 +107,13 @@ Financial crime looks perfect, with no failures, but 18 prompts can only show
 that its rate is below 15%. Claiming it is below 5% would need 59
 failure-free prompts, and below 1% would need 299. Most published red-team
 results could not support the claims made from them.
+
+![Red-team failure rates with intervals, overall and by attack level](../05-illustrations/output/g1_failure_rates.png)
+
+*The grey interval treats every reply as independent and looks precise; the
+blue one below it, from resampling prompts, is the honest width. Financial
+crime has no failures, but its interval still reaches 15%.*
+
 [`g1_red_team_failure_rate.py`](../05-illustrations/g1_red_team_failure_rate.py)
 
 **Adjacent tests.**

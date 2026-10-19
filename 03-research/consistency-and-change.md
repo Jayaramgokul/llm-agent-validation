@@ -221,6 +221,14 @@ one cell, the failure rate more than doubles, and that cell is non-native
 speakers in situations where the client is vulnerable: the group a firm most
 needs to protect. The cell-by-cell comparison, with the correction, finds it
 and nothing else.
+
+![Change in failure rate from old to new version, by persona and category](../05-illustrations/output/v4_regression_by_cell.png)
+
+*Each cell is one persona and test category; blue means the update reduced
+failures, red that it increased them. The first-time investor fee cell is
+also red, but by an amount chance can explain. Only the outlined cell
+survives the correction across 24 cells.*
+
 [`v4_safe_updates.py`](../05-illustrations/v4_safe_updates.py)
 
 **Adjacent tests.**

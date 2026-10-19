@@ -219,6 +219,13 @@ dimensions, the farthest item is only 16% farther than the nearest, so
 "nearest" means almost nothing. When the data really does contain groups,
 contrast recovers to about 1, six times the unstructured baseline. The test
 tells the two situations apart, which looking at a few results cannot.
+
+![Relative contrast against the number of dimensions](../05-illustrations/output/o4_contrast_by_dimension.png)
+
+*With no structure (blue), contrast falls from 160 in 2 dimensions to 0.16
+in 768. The red square is the same 768 dimensions with real client types:
+about six times the unstructured value.*
+
 [`o4_similarity_high_dimensions.py`](../05-illustrations/o4_similarity_high_dimensions.py)
 
 **Adjacent tests.**

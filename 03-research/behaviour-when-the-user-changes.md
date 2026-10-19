@@ -101,6 +101,14 @@ very few large moves. The opinion versions shift the average by 3 points and
 push a quarter of profiles past the tolerance, more than ten times the noise
 rate. An average of +3.2 points looks small; the share of profiles moving
 more than 5 points shows that, for those clients, the shift is large.
+
+![Change in recommended equity share: repeat runs against a bullish client](../05-illustrations/output/b1_paired_shift.png)
+
+*Grey: the change when the same chat is run again, all within a few points.
+Blue outline: the change when the client states a bullish view. Most
+profiles look like the noise, but a quarter form a second hump between 5 and
+20 points, past the red tolerance line.*
+
 [`b1_sycophancy_pairs.py`](../05-illustrations/b1_sycophancy_pairs.py)
 
 **Adjacent tests.**

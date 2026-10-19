@@ -12,9 +12,13 @@ Simulated outcomes: no language model is called.
     python 05-illustrations/k2_calibration_by_group.py
 """
 
-import numpy as np
+import matplotlib
 
-from common import expected_calibration_error
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+
+from common import expected_calibration_error, save  # noqa: E402
 
 BINS = np.linspace(0.1, 0.9, 9)
 
@@ -41,6 +45,18 @@ def main():
     print("\nWhat this shows: an overall calibration figure averages a well-served majority with a minority\n"
           "for whom the agent is consistently overconfident. Calibration should be reported per group, like\n"
           "any other performance measure.")
+    fig, ax = plt.subplots(figsize=(4, 4))
+    ax.plot([0, 1], [0, 1], color="#bbbbbb", lw=1)
+    for label, colour in (("formal", "#3182bd"), ("informal", "#d8543b")):
+        m = group == label
+        b = np.digitize(stated[m], BINS)
+        ax.plot([stated[m][b == k].mean() for k in range(len(BINS) + 1)],
+                [happened[m][b == k].mean() for k in range(len(BINS) + 1)], "o-", color=colour, label=f"{label} writers")
+    ax.set_xlabel("Stated confidence")
+    ax.set_ylabel("How often it happened")
+    ax.legend(frameon=False)
+    ax.spines[["top", "right"]].set_visible(False)
+    print(f"\nChart: {save(fig, 'k2_calibration_by_group')}")
 
 
 if __name__ == "__main__":
